@@ -30,38 +30,84 @@ const computerSelection = function () {
 //     3.a: return true or string if user beats computer
 //     3.b: return true or string if computer beats user
 //     3.c: return string stating game was a draw
-const compare = function (computerChoice) {
+const compare = function (userChoice, computerChoice) {
   // 1: Get user input from prompt
-  const userChoice = prompt(
-    "What's your choice: Rock, Paper, or Scissors?: "
-  ).toLowerCase();
+  // const userChoice = prompt(
+  //   "What's your choice: Rock, Paper, or Scissors?: "
+  // ).toLowerCase();
+  const outputContainer = document.querySelector(".output");
+  const gameOutput = document.querySelector(".gameOutcome");
+  const score = document.querySelector(".score");
+
   if (userChoice === computerChoice) {
-    console.log("Draw");
+    gameOutput.textContent = `Draw`;
   } else if (
     (userChoice === "paper" && computerChoice === "rock") ||
     (userChoice === "rock" && computerChoice === "scissors") ||
     (userChoice === "scissors" && computerChoice === "paper")
   ) {
-    console.log("Player Wins!");
+    gameOutput.textContent = `Player Wins!`;
+    score.textContent = `User Score: ${userScore} Computer Score: ${computerScore}`;
+
     userScore++;
   } else {
-    console.log("Computer Wins!");
+    gameOutput.textContent = `Computer Wins!`;
+    score.textContent = `User Score: ${userScore} Computer Score: ${computerScore}`;
+
     computerScore++;
   }
-
-  console.log(
-    `Player choice: ${userChoice} Computer choice: ${computerChoice}`
-  );
-  console.log(`User Score: ${userScore} Computer Score: ${computerScore}`);
 };
 
-while (userScore < 3 || computerScore < 3) {
-  compare(computerSelection());
-  if (userScore === 3) {
-    console.log("Player Wins");
-    break;
-  } else if (computerScore === 3) {
-    console.log("Computer Wins");
-    break;
-  }
-}
+const choiceButtons = document.querySelectorAll(".btn");
+console.log(choiceButtons);
+
+choiceButtons.forEach((btn) => {
+  btn.addEventListener("click", function (e) {
+    let userChoice = btn.innerText.toLowerCase();
+    if (userScore === 5) {
+      alert(`Player wins, Game over!`);
+      choiceButtons.forEach((btn) => {
+        btn.disabled = true;
+      });
+    } else if (computerScore === 5) {
+      alert(`Computer wins, Game over!`);
+      choiceButtons.forEach((btn) => {
+        btn.disabled = true;
+      });
+    }
+    compare(userChoice, computerSelection());
+
+    // console.log(`User Choice: ${userChoice}`);
+  });
+});
+
+const choiceOutput = document.querySelector("h3");
+const clear = document.querySelector(".clear");
+
+// const clearText = function () {
+//   if (choiceOutput) {
+//     choiceOutput.value = "";
+//   }
+// };
+
+// while () {
+//
+// }
+
+// let output = document.querySelector(".output");
+// // output.innerHTML = "";
+
+// console.log(output);
+// const initialText = document.createElement("p");
+// initialText.textContent = `Countdown to blast off!`;
+// for (let i = 10; i >= 0; i--) {
+//   // so, this needs to be inside of the for Loop
+//   const para = document.createElement("p");
+//   if (i === 0) {
+//     para.textContent = `BLAST OFF!`;
+//     output.appendChild(para);
+//   } else {
+//     para.textContent = `${i}`;
+//     output.appendChild(para);
+//   }
+// }
